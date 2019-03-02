@@ -9,17 +9,24 @@ mongoose.connect(mongoDB);
 mongoose.Promise = global.Promise;
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-const driver = require('./routes/drivers.route'); // Imports routes for the drivers
-const route = require('./routes/routes.route'); // Imports routes for the routes
+const driver = require('./routes/Drivers.route'); // Imports routes for the drivers
+const route = require('./routes/Routes.route'); // Imports routes for the routes
+
 const app = express();
+
 const router = express.Router();
 app.use(bodyParser.json({type: "*/*"}));
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: true}));
+app.engine('html', require('ejs').renderFile);
+app.use(express.static("views"));
 
-app.use('/drivers', driver);
-app.use('/routes', route);
-route.get('/', function(req, res){
-    res.render('index.html');
+app.set('view engine', 'html');
+app.use('/Drivers', driver);
+app.use('/Routes', route);
+app.get('/home', function(req, res){
+   //res.sendFile(path.join(__dirname + '/index.html'));
+   console.log("Received");
+   res.render('index', {});
 })
 
 let port = 8009;

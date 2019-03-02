@@ -5,10 +5,11 @@ const express = require('express');
 const router = express.Router();
 
 // Require the controllers WHICH WE DID NOT CREATE YET!!
-const route_controller = require('../controllers/route.controller');
-
-router.post('/create', route_controller.route_create);
-router.get('/show', route_controller.route_all);
-router.get('/:id', route_controller.route_details);
-router.get('/driver_daily_route/:driver_id', route_controller.driver_daily_route);
+const route_controller = require('../controllers/RouteController');
+router.post('/Routes/', route_controller.index);
+router.post('/Routes/create', route_controller.route_create_post);
+router.get('/Routes/create', route_controller.route_create_get);
+router.get('/Routes/show', route_controller.route_list);
+router.get('Routes/detail/:id', route_controller.route_detail);
+router.get('/Routes/driver_daily_route/:driver_id', route_controller.driver_daily_route);
 module.exports = router;
